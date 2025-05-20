@@ -1,3 +1,4 @@
+import type { Reservation } from "../../@types/reservation.type";
 import axiosClient from "../axiosClient";
 
 /**
@@ -6,7 +7,6 @@ import axiosClient from "../axiosClient";
 export const ReservationAPI = {
     /**
      * The result of fetching all reservations from the API.
-     * @returns {Promise<AxiosResponse>} A promise containing the reservation data.
      */
-    getAll: axiosClient.get("/reservations")
+    getAll: async () => axiosClient.get<Reservation[]>("/reservations")
 }
