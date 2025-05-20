@@ -1,0 +1,19 @@
+name: CD
+on:
+  push:
+    branches:
+    - main
+jobs:
+  build:
+    name: Zip and Post in Slack
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          rm -rf .git
+          zip -r cove-coding-challenge.zip ./.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cove-coding-challenge.zip
+          path: cove-coding-challenge.zip
+          

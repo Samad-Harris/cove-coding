@@ -1,0 +1,11 @@
+name: Dependabot New PR
+on:
+  pull_request:
+    types:
+     - opened
+     - reopened
+jobs:
+   run:
+    if: github.actor == 'dependabot[bot]'
+    uses: livelyhood/cove-workflows/.github/workflows/notify-new-dependabot-pr.yml@main
+    secrets: inherit
