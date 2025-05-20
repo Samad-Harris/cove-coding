@@ -1,7 +1,7 @@
 import './App.css';
-import { DatePicker } from './DatePicker';
-import { DropDownSelect } from './DropDownSelect';
-import { ReservationList } from './ReservationList';
+import { DatePicker } from './components/inputs/DatePicker';
+import { DropDownSelect } from './components/inputs/DropDownSelect';
+import { ReservationList } from './components/lists/ReservationList';
 
 const App = () => {
   // TODO: fetch reservations from the API
