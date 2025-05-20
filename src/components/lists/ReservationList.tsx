@@ -1,13 +1,8 @@
-import 'react';
-
-interface Reservation {
-  start: Date;
-  end: Date;
-  room: string;
-}
+import "react";
+import type { Reservation } from "../../@types/reservation.type";
 
 interface ReservationListProps {
-  reservations: Reservation[]
+  reservations: Reservation[];
 }
 
 // TODO: style to match the mock-up
@@ -19,4 +14,3 @@ export const ReservationList = ({ reservations }: ReservationListProps) => (
     }}
   />
 );
-
