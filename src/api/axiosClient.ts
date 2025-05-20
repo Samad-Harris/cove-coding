@@ -7,6 +7,7 @@
  */
 import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { getApiBaseUrl } from '../utils/apiUtils';
 
 /**
  * Default configuration for the Axios instance
@@ -15,7 +16,7 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
  * Sets common headers, timeout, and base URL for all requests
  */
 const config: AxiosRequestConfig = {
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:3000/api',
+    baseURL: getApiBaseUrl(),
     timeout: 30000,
     headers: {
         'Content-Type': 'application/json',
