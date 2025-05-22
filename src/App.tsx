@@ -3,8 +3,10 @@ import { isSameDay, parseISO } from "date-fns";
 import { useGetReservations } from "./api/hooks/useGetReservations";
 import { DatePicker } from "./components/inputs/DatePicker";
 import { DropDownSelect } from "./components/inputs/DropDownSelect";
-import { ReservationList } from "./components/lists/ReservationList";
-import type { SelectOption } from "./@types/SelectOption.type";
+import { useRoomOptions } from "./hooks/useRoomOptions";
+import { useDateAvailability } from "./hooks/useDateAvailability";
+import { useFilterSelections } from "./hooks/useFilterSelections";
+import { useFilteredReservations } from "./hooks/useFilteredReservations";
 
 const App: React.FC = () => {
   /**
@@ -21,63 +23,24 @@ const App: React.FC = () => {
 
   /**
    * -----------------------------
-   *        UI State Layer
+   *     Custom Hooks Layer
    * -----------------------------
    */
-  const [selectedDate, setSelectedDate] = useState<Date>();
-  const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
+  // Filter selection state (date and room)
+  const { selectedDate, selectedRoomId, handleDateChange, handleRoomChange } =
+    useFilterSelections();
 
-  const roomOptions: SelectOption[] = useMemo(() => {
-    if (!reservations) return [];
-    const map = new Map(reservations.map(({ room }) => [room.id, room]));
+  // Room options for dropdown
+  const roomOptions = useRoomOptions(reservations);
 
-    return Array.from(map.values()).map(({ id, name }) => ({
-      value: id,
-      label: name,
-    }));
-  }, [reservations]);
+  // Date availability filtering
+  const { isDateAvailable } = useDateAvailability(reservations  );
 
-  const availableDates = useMemo(() => {
-    if (!reservations) return [];
-
-    const uniqueDates = [
-      ...new Set(reservations.map(({ start }) => start.split("T")[0])),
-    ];
-
-    return uniqueDates.map((dateStr) => parseISO(dateStr));
-  }, [reservations]);
-
-  // Check if the selected date is available
-  const isDateAvailable = useCallback(
-    (date: Date) =>
-      availableDates.length === 0 ||
-      availableDates.some((availableDate) => isSameDay(date, availableDate)),
-    [availableDates]
-  );
-
-  // Filter reservations based on selected date and room
-  const filteredReservations = useMemo(() => {
-    if (!reservations) return [];
-
-    return reservations.filter(
-      ({ room, start }) =>
-        // If no date is selected, show all reservations for the selected room
-        (selectedDate ? isSameDay(new Date(start), selectedDate) : true) &&
-        // If no room is selected, show all reservations for the selected date
-        (selectedRoomId ? room.id === selectedRoomId : true)
-    );
-  }, [reservations, selectedDate, selectedRoomId]);
-
-  // Handle date and room changes
-  const handleDateChange = useCallback(
-    (date: Date | null) => date && setSelectedDate(date),
-    []
-  );
-
-  // Handle room change
-  const handleRoomChange = useCallback(
-    (roomId?: string | null) => setSelectedRoomId(roomId ?? null),
-    []
+  // Filtered reservations based on selections
+  const filteredReservations = useFilteredReservations(
+    reservations,
+    selectedDate,
+    selectedRoomId
   );
 
   /**
