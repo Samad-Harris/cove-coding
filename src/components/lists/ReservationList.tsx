@@ -26,5 +26,6 @@ export const ReservationList: React.FC<ReservationListProps> = ({
     {reservations.map((reservation) => (
       <ReservationCard key={reservation.id} reservation={reservation} />
     ))}
+    {/* TODO: Implement pagination for better performance when dealing with large reservation lists */}
   </div>
 );
