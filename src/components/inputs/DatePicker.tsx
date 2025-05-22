@@ -18,11 +18,13 @@ export const DatePicker = memo(
     value,
     dateFormat = "yyyy-MM-dd",
     placeholderText = "Select a date",
+    // className = "", // we can make the styles more customizable using this prop
     filterDate,
     ...rest
   }: RDDatePickerProps) => (
     <ReactDatePicker
       selected={value ? new Date(value) : null}
+      className={`bg-white px-2`}
       dateFormat={dateFormat}
       placeholderText={placeholderText}
       aria-label="Date picker"

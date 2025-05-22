@@ -40,6 +40,7 @@ export const DropDownSelect = memo(
         value={value ?? ""}
         onChange={(e) => onChange(e.target.value || null)}
         aria-label="Room selector"
+        className={`bg-white`}
         {...rest}
       >
         {placeholder && <option value="">{placeholder}</option>}

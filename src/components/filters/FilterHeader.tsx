@@ -23,7 +23,7 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
   roomOptions,
   isDateAvailable,
 }) => (
-  <header className="flex flex-col gap-4 sm:flex-row sm:items-end">
+  <header className="flex flex-col gap-4 p-4 bg-gray-100 sm:flex-row sm:justify-end">
     <DatePicker
       selected={selectedDate}
       onChange={handleDateChange}
