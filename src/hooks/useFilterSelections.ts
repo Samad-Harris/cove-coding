@@ -6,7 +6,7 @@ import { useState, useCallback } from 'react';
  * @returns Object containing selected values and handler functions
  */
 export const useFilterSelections = () => {
-  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
 
   // Handle date changes

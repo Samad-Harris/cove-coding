@@ -24,15 +24,15 @@ const App: React.FC = () => {
    *     Custom Hooks Layer
    * -----------------------------
    */
+  // Date availability filtering
+  const { isDateAvailable, firstAvailableDate } = useDateAvailability(reservations);
+  
   // Filter selection state (date and room)
   const { selectedDate, selectedRoomId, handleDateChange, handleRoomChange } =
     useFilterSelections();
 
   // Room options for dropdown
   const roomOptions = useRoomOptions(reservations);
-
-  // Date availability filtering
-  const { isDateAvailable } = useDateAvailability(reservations);
 
   // Filtered reservations based on selections
   const filteredReservations = useFilteredReservations(
@@ -56,6 +56,7 @@ const App: React.FC = () => {
         handleRoomChange={handleRoomChange}
         roomOptions={roomOptions}
         isDateAvailable={isDateAvailable}
+        firstAvailableDate={firstAvailableDate}
       />
 
       {/* Reservation Content */}

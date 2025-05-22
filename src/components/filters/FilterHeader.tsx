@@ -10,6 +10,7 @@ interface FilterHeaderProps {
   handleRoomChange: (roomId?: string | null) => void;
   roomOptions: SelectOption[];
   isDateAvailable: (date: Date) => boolean;
+  firstAvailableDate?: Date;
 }
 
 /**
@@ -22,12 +23,14 @@ export const FilterHeader: React.FC<FilterHeaderProps> = ({
   handleRoomChange,
   roomOptions,
   isDateAvailable,
+  firstAvailableDate,
 }) => (
   <header className="flex flex-col gap-4 p-4 bg-gray-100 sm:flex-row sm:justify-end">
     <DatePicker
       selected={selectedDate}
       onChange={handleDateChange}
       filterDate={isDateAvailable}
+      openToDate={firstAvailableDate}
     />
     <DropDownSelect
       placeholder="Select a room"
