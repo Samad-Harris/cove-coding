@@ -18,20 +18,34 @@ export const ReservationContent: React.FC<ReservationContentProps> = ({
   refetch,
   filteredReservations,
 }) => (
-  <main className="mt-6 space-y-2">
-    {isLoading && <div>Loading reservations…</div>}
+  <main className="mt-6 space-y-2" aria-live="polite">
+    {isLoading && (
+      <div role="status" aria-label="Loading reservations">
+        <p>Loading reservations…</p>
+      </div>
+    )}
 
     {isError && (
-      <div className="text-red-600">
-        Failed to load reservations.{" "}
-        <button onClick={() => refetch()}>Retry</button>
+      <div role="alert" className="text-red-600">
+        <p>Failed to load reservations.</p>
+        <button
+          onClick={() => refetch()}
+          className="underline ml-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          aria-label="Retry loading reservations"
+        >
+          Retry
+        </button>
       </div>
     )}
 
     {!isLoading && !filteredReservations.length && (
-      <div>No reservations found for the chosen filters.</div>
+      <div role="status" aria-label="No reservations found">
+        <p>No reservations found for the chosen filters.</p>
+      </div>
     )}
 
-    <ReservationList reservations={filteredReservations} />
+    {!isLoading && !isError && filteredReservations.length > 0 && (
+      <ReservationList reservations={filteredReservations} />
+    )}
   </main>
 );

@@ -23,7 +23,10 @@ export const ReservationCard: React.FC<{ reservation: Reservation }> = ({
 
   return (
     // used article element to improve semantics and accessibility
-    <article className="flex flex-col sm:flex-row gap-4 rounded-sm shadow-md p-4 bg-white">
+    <article
+      data-testid="reservation-card"
+      className="flex flex-col sm:flex-row gap-4 rounded-sm shadow-md p-4 bg-white"
+    >
       {/* Room image */}
       <img
         src={imgSrc}
