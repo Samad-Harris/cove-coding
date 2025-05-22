@@ -1,8 +1,6 @@
-import { useState, useMemo, useCallback } from "react";
-import { isSameDay, parseISO } from "date-fns";
 import { useGetReservations } from "./api/hooks/useGetReservations";
-import { DatePicker } from "./components/inputs/DatePicker";
-import { DropDownSelect } from "./components/inputs/DropDownSelect";
+import { FilterHeader } from "./components/filters/FilterHeader";
+import { ReservationContent } from "./components/content/ReservationContent";
 import { useRoomOptions } from "./hooks/useRoomOptions";
 import { useDateAvailability } from "./hooks/useDateAvailability";
 import { useFilterSelections } from "./hooks/useFilterSelections";
@@ -34,7 +32,7 @@ const App: React.FC = () => {
   const roomOptions = useRoomOptions(reservations);
 
   // Date availability filtering
-  const { isDateAvailable } = useDateAvailability(reservations  );
+  const { isDateAvailable } = useDateAvailability(reservations);
 
   // Filtered reservations based on selections
   const filteredReservations = useFilteredReservations(
@@ -51,37 +49,22 @@ const App: React.FC = () => {
   return (
     <div className="app mx-auto max-w-4xl p-4">
       {/* Filters */}
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-end">
-        <DatePicker
-          selected={selectedDate}
-          onChange={handleDateChange}
-          filterDate={isDateAvailable}
-        />
-        <DropDownSelect
-          placeholder="Select a room"
-          value={selectedRoomId ?? ""}
-          onChange={handleRoomChange}
-          options={roomOptions}
-        />
-      </header>
+      <FilterHeader
+        selectedDate={selectedDate}
+        selectedRoomId={selectedRoomId}
+        handleDateChange={handleDateChange}
+        handleRoomChange={handleRoomChange}
+        roomOptions={roomOptions}
+        isDateAvailable={isDateAvailable}
+      />
 
-      {/* Reservation List */}
-      <main className="mt-6 space-y-2">
-        {isLoading && <div>Loading reservations…</div>}
-
-        {isError && (
-          <div className="text-red-600">
-            Failed to load reservations.{" "}
-            <button onClick={() => refetch()}>Retry</button>
-          </div>
-        )}
-
-        {!isLoading && !filteredReservations.length && (
-          <div>No reservations found for the chosen filters.</div>
-        )}
-
-        <ReservationList reservations={filteredReservations} />
-      </main>
+      {/* Reservation Content */}
+      <ReservationContent
+        isLoading={isLoading}
+        isError={isError}
+        refetch={refetch}
+        filteredReservations={filteredReservations}
+      />
     </div>
   );
 };
