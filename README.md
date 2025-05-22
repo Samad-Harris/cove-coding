@@ -57,7 +57,18 @@ Users should be able to change the filter values and see only the reservations t
 
 ### Approach
 
-**TODO:** Explain your approach here.
+`DatePicker` and `DropDownSelect` components improved by extending native types.
+
+#### Performance
+
+Leveraging `useMemo` and `useCallback` hooks, custom hooks are created in `/hooks` folder for a clean and DRY code.
+Also used `React.memo` for memorizing the components for a better performance.
+
+#### State management & HTTP client
+
+* `React-query` is used to manage server-side state management. I created a basic custom hook with a slate time.
+* `Axios` is used as HTTP client. It's customized in `src/api/AxiosClient.ts` using interceptors for both request and responses.
+* Endpoints are structured in `/api/endpoints` folder. with this structure we can have access to all endpoints in a clean way. (`CoveAPI.Endpoint.get`).
 
 ---
 
@@ -90,7 +101,8 @@ Mobile:
 
 ### Approach
 
-**TODO:** Explain your approach here.
+I used tailwindCSS for styles. there are simple loading and error components which can be improved later. 
+Clicking the `DatePicker` opens the first available date (default was today). Non-available dates are disabled to improve the user experience.
 
 ---
 
@@ -119,9 +131,27 @@ Mobile:
 
 ### Approach
 
-**TODO:** Explain your approach here.
+* `vitest` for using tests - non-overlapping and conflicts tested 
+* `Playwright` for E2E testing - all flows and states are tested
+* `Storybook` for visual testing
+
+Hope you like my coding style 😎
 
 ---
+
+## Things to Improve next!
+
+
+* Pagination or progressive loading helps a lot for list view
+* Images can be optimized using tools like `vite-imagetools`
+* Integration and API tests
+* Error boundary implementation
+* Add GitHub Actions workflows for continuous testing and deployment
+* Add Husky for client side configuration before commits 
+* Performance monitoring with React Profiler
+* Add proper mocking with MSW for development and testing
+* Implement proper TypeScript path aliases for cleaner imports
+* Containerize the application with Docker 
 
 ## Final Steps
 
